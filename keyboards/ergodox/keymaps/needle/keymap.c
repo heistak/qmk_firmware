@@ -15,49 +15,53 @@
 #define JA_LBRC KC_RBRC  // [ and {
 #define JA_RBRC KC_BSLS  // ] and }
 
+// See const macro_t *action_get_macro() at lower half of this file
+#define JA_MOEISU M(1) // Multi-OS Eisu (Mac Eisu and Muhenkan)
+#define JA_MOKANA M(2) // Multi-OS Kana (Mac Kana and Henkan)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  * 
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | Esc    |   1  |   2  |   3  |   4  |   5  |   6  |           |   7  |   8  |   9  |   0  |   -= |   ~^ |   |¥   |
+ * |Esc / L2|   1  |   2  |   3  |   4  |   5  |   6  |           |   7  |   8  |   9  |   0  |   |¥ |   ~^ |   -=   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | TabCtrl|   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   `@   |
+ * |Tab/Ctrl|   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   `@   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | BkSp   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L2|Entr/Cmd|
  * |--------+------+------+------+------+------|  :*  |           |  \_  |------+------+------+------+------+--------|
  * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |/ Ctrl| RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | LCtrl|  '"  | Left | Right|Muhenk|                                       |Henkan|  Up  | Down |   [  |   ]  |
+ *   | LCtrl|  F17 |PrtScr|  F19 |MOEisu|                                       |MOKana| Ins  | Del  |   [  |] Ctrl|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | Ins  | Del  |       | Home | End  |
+ *                                        | Home | End  |       | Left | Right|
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |ZenHan|       | PgUp |        |      |
- *                                 | Space|Alt   |------|       |------|  Space |Space |
- *                                 | /Cmd |Option| Caps |       | PgDn |        |      |
+ *                                 |      |      | PgUp |       |  Up  |        |      |
+ *                                 | Space|Alt   |------|       |------|  Enter |Space |
+ *                                 | /Cmd |Option| PgDn |       |  Dn  |        |      |
  *                                 `--------------------'       `----------------------'    
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
 // Otherwise, it needs KC_*
 [BASE] = KEYMAP(  // layer 0 : default
         // left hand
-        KC_ESC,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_6,
+        LT(MDIA,KC_ESC),KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_6,
         CTL_T(KC_TAB),  KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(SYMB),
         KC_BSPC,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
         KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   JA_CLON,
-        KC_LCTL,        KC_F17,       KC_LEFT,KC_RGHT,KC_MHEN,
-                                                      KC_INS, KC_DEL,
-                                                              KC_ZKHK,
-                                        GUI_T(KC_SPC),KC_LALT,KC_CAPS,
+        KC_LCTL,        KC_F17,       KC_PSCR, KC_F19, JA_MOEISU,
+                                                      KC_HOME, KC_END,
+                                                              KC_PGUP,
+                                        GUI_T(KC_SPC),KC_LALT,KC_PGDN,
         // right hand
-             KC_7,        KC_8,   KC_9,   KC_0,   KC_MINS,  JA_HAT,   KC_JYEN,
+             KC_7,        KC_8,   KC_9,   KC_0,   KC_JYEN,  JA_HAT,   KC_MINS,
              TG(SYMB),    KC_Y,   KC_U,   KC_I,   KC_O,     KC_P,     JA_AT,
                           KC_H,   KC_J,   KC_K,   KC_L,   LT(MDIA, KC_SCLN),GUI_T(KC_ENT),
              JA_ENUN,     KC_N,   KC_M,   KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
-                                  KC_HENK,KC_UP, KC_DOWN,JA_LBRC,CTL_T(JA_RBRC),
-             KC_HOME,        KC_END,
-             KC_PGUP,
-             KC_PGDN,KC_SPC, KC_F16
+                                JA_MOKANA,KC_INS, KC_DEL, JA_LBRC,CTL_T(JA_RBRC),
+             KC_LEFT,KC_RGHT,
+             KC_UP,
+             KC_DOWN,KC_ENT, KC_SPC
 
     ),
 /* Keymap 1: Symbol Layer
@@ -105,15 +109,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 2: Media and mouse keys
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |        | F18  | F19  | F20  |      |      |      |           |      |      |      |      |      |      | Reset  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      |      | MsUp |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |      |      |      |      |  Play  |
+ * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |      |      |ZenHan|      |  Play  |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
+ * | Caps   |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | Lclk | Rclk |                                       | Mute |VolUp |VolDn |ScrLk |Pause |
+ *   |      |      |      | Lclk | Rclk |                                       | Mute |VolDn |VolUp |ScrLk |Pause |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
@@ -125,20 +129,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // MEDIA AND MOUSE
 [MDIA] = KEYMAP(
-       RESET,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_F18,  KC_F19,  KC_F20,  KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_CAPS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,
                                            KC_TRNS, KC_TRNS,
                                                     KC_TRNS,
                                   KC_TRNS, KC_TRNS, KC_TRNS,
     // right hand
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RESET,
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_ZKHK, KC_TRNS, KC_MPLY,
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
-                          KC_MUTE, KC_VOLU, KC_VOLD, KC_SLCK, KC_PAUS,
+                          KC_MUTE, KC_VOLD, KC_VOLU, KC_SLCK, KC_PAUS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_WBAK
@@ -154,10 +158,20 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   // MACRODOWN only works in this function
       switch(id) {
         case 0:
-        if (record->event.pressed) {
-          SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        }
-        break;
+          if (record->event.pressed) {
+            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " at " QMK_VERSION);
+          }
+          break;
+        case 1: // Multi OS Eisu
+          if (record->event.pressed) {
+            return MACRO ( T(MHEN), T(LANG2), END );
+          }
+          break;
+        case 2: // Multi OS Kana
+          if (record->event.pressed) {
+            return MACRO ( T(HENK), T(LANG1), END );
+          }
+          break;
       }
     return MACRO_NONE;
 };

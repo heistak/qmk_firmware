@@ -1,2 +1,2 @@
 #!/bin/sh
-make clean && make teensy KEYMAP=needle  
+make clean && make teensy KEYMAP=needle SLEEP_LED_ENABLE=no
