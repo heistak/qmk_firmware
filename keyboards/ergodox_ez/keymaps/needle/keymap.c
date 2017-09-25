@@ -1,4 +1,4 @@
-#include "ergodox.h"
+#include QMK_KEYBOARD_H
 #include "debug.h"
 #include "action_layer.h"
 #include "version.h"
@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|  :*  |           |  \_  |------+------+------+------+------+--------|
  * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |/ Ctrl| RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | LCtrl|  F17 |PrtScr|  F19 |MOEisu|                                       |MOKana| Ins  | Del  |   [  |] Ctrl|
+ *   | LCtrl| Caps |  F17 |PrtScr|MOEisu|                                       |MOKana| Ins  | Del  |   [  |] Ctrl|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | Home | End  |       | Left | Right|
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CTL_T(KC_TAB),  KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(SYMB),
         KC_BSPC,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
         KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   JA_CLON,
-        KC_LCTL,        KC_F17,       KC_PSCR, KC_F19, JA_MOEISU,
+        KC_LCTL,        KC_CAPS,      KC_F17, KC_PSCR,JA_MOEISU,
                                                       KC_HOME, KC_END,
                                                               KC_PGUP,
                                         GUI_T(KC_SPC),KC_LALT,KC_PGDN,
